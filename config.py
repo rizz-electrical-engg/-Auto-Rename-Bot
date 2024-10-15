@@ -48,45 +48,44 @@ Use These Keywords To Setup Custom File Name
 
 <b>➻ Your Current Auto Rename Format :</b> <code>{format_template}</code></blockquote> """
     
-    ABOUT_TXT = f"""<blockquote expandable><b>🤖 My Name :</b> <a href='https://t.me/AutoRenameXBot'>Auto Rename Bot ⚡</a>
-<b>📝 Language :</b> <a href='https://python.org'>Python 3</a>
-<b>📚 Library :</b> <a href='https://pyrogram.org'>Pyrogram 2.0</a>
-<b>🚀 Server :</b> <a href='https://heroku.com'>Heroku</a>
-<b>📢 Channel :</b> <a href='https://t.me/Madflix_Bots'>Madflix Botz</a>
-<b>🧑‍💻 Developer :</b> <a href='https://t.me/CallAdminRobot'>Jishu Developer</a>
-    
-<b>♻️ Bot Made By :</b> @vpsrdpdomainshop</blockquote> """
+    ABOUT_TXT = f"""<blockquote><b>
+┏━━━━━━━━━━━━━
+┣ 🔮 Creator        <a href='https://t.me/Noctophile'>𝙈𝙚</a>
+┣ 🍄 Main Channel   <a href='https://t.me/aboutRizzx'>UPDATES </a>
+┣ 🗿 Cloud Shop     <a href='https://t.me/vpsrdpdomainshop'>𝙑𝙋𝙎 | 𝗥𝗗𝗣 | 𝗗𝗼𝗺𝗮𝗶𝗻𝘀 ☁️</a>
+┗━━━━━━━━━━━━━
+</b></blockquote>"""
 
     
-    THUMBNAIL_TXT = """<b><u>🖼️  HOW TO SET THUMBNAIL</u></b>
+    THUMBNAIL_TXT = """<blockquote expandable><b><u>🖼️  HOW TO SET THUMBNAIL</u></b>
     
 ⦿ You Can Add Custom Thumbnail Simply By Sending A Photo To Me....
     
 ⦿ /viewthumb - Use This Command To See Your Thumbnail
-⦿ /delthumb - Use This Command To Delete Your Thumbnail"""
+⦿ /delthumb - Use This Command To Delete Your Thumbnail</blockquote>"""
 
-    CAPTION_TXT = """<b><u>📝  HOW TO SET CAPTION</u></b>
+    CAPTION_TXT = """<blockquote expandable><b><u>📝  HOW TO SET CAPTION</u></b>
     
 ⦿ /set_caption - Use This Command To Set Your Caption
 ⦿ /see_caption - Use This Command To See Your Caption
-⦿ /del_caption - Use This Command To Delete Your Caption"""
+⦿ /del_caption - Use This Command To Delete Your Caption</blockquote>"""
 
-    PROGRESS_BAR = """\n
+    PROGRESS_BAR = """<blockquote>\n
 <b>📁 Size</b> : {1} | {2}
 <b>⏳️ Done</b> : {0}%
 <b>🚀 Speed</b> : {3}/s
-<b>⏰️ ETA</b> : {4} """
+<b>⏰️ ETA</b> : {4} </blockquote>"""
     
     
-    DONATE_TXT = """<b>🥲 Thanks For Showing Interest In Donation! ❤️</b>
+    DONATE_TXT = """<blockquote><b>🥲 Thanks For Showing Interest In Donation! ❤️</b>
     
 If You Like My Bots & Projects, You Can 🎁 Donate Me Any Amount From 10 Rs Upto Your Choice.
     
-<b>🛍 UPI ID:</b> <code>madflixofficial@axl</code> """
+<b>🛍 UPI ID:</b> <code>mehere@sbi</code></blockquote> """
     
-    HELP_TXT = """<b>Hey</b> {}
+    HELP_TXT = """<blockquote expandable><b>Hey</b> {}
     
-Here Is The Help For My Commands."""
+Here Is The Help For My Commands.</blockquote>"""
 
 
 

@@ -1,3 +1,4 @@
+from plugins.metadata_watermark import add_metadata, add_watermark, get_metadata
 from pyrogram import Client, filters
 from pyrogram.errors import FloodWait
 from pyrogram.types import InputMediaDocument, Message 

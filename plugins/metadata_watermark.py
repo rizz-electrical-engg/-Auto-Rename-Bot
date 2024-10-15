@@ -66,4 +66,23 @@ async def add_image_watermark(file_path, watermark_text, position):
         img.save(file_path)
     logger.info(f"Watermark added to image: {file_path}")
 
-async
+async def add_video_watermark(file_path, watermark_text, position):
+    cap = cv2.VideoCapture(file_path)
+    fps = cap.get(cv2.CAP_PROP_FPS)
+    width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+    out = cv2.VideoWriter(f"{file_path}_watermarked.mp4", fourcc, fps, (width, height))
+    
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
+        
+        cv2.putText(frame, watermark_text, (10, 20), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
+        out.write(frame)
+    
+    cap.release()
+    out.release()
+    logger.info(f"Watermark added to video: {file_path}")

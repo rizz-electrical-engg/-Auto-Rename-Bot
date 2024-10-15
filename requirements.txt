@@ -8,4 +8,3 @@ aiohttp
 pytz
 psutil
 mutagen
-ImageFont

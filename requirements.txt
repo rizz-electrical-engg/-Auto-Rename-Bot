@@ -1,4 +1,4 @@
-pyrogram==2.0.83
+git+https://github.com/KurimuzonAkuma/pyrogram
 TgCrypto
 motor
 dnspython

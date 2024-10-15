@@ -90,9 +90,3 @@ Here Is The Help For My Commands.</blockquote>"""
 
 
 
-
-# Jishu Developer 
-# Don't Remove Credit 🥺
-# Telegram Channel @Madflix_Bots
-# Developer @JishuDeveloper
-

@@ -23,12 +23,12 @@
 
 ### DEPLOYEMENT SUPPORT
 <b>FOR VPS</b>
-'''
+```
     git clone repolink
     cd your repo name
     pip3 install -r requirements.txt
     python3 bot.py
-'''
+```
 
 ### FEATURES
  - Renames very fast .

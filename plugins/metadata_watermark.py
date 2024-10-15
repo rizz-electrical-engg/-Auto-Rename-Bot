@@ -5,6 +5,13 @@ from hachoir.parser import createParser
 from mutagen.mp3 import MP3
 from mutagen.mp4 import MP4, MP4StreamInfoError
 from mutagen.easyid3 import EasyID3
+import logging
+from PIL import Image, ImageDraw, ImageFont
+import os
+import cv2
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 async def add_metadata(file_path, metadata):
     file_extension = os.path.splitext(file_path)[1].lower()
@@ -26,27 +33,37 @@ async def add_metadata(file_path, metadata):
 async def add_watermark(file_path, watermark_text, position="bottom-right"):
     file_extension = os.path.splitext(file_path)[1].lower()
     
-    if file_extension in ['.jpg', '.jpeg', '.png']:
-        with Image.open(file_path) as img:
-            draw = ImageDraw.Draw(img)
-            font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 36)
-            
-            w, h = img.size
-            text_w, text_h = draw.textsize(watermark_text, font=font)
-            
-            if position == "bottom-right":
-                x, y = w - text_w - 10, h - text_h - 10
-            elif position == "top-left":
-                x, y = 10, 10
-            else:
-                x, y = w // 2 - text_w // 2, h // 2 - text_h // 2
-            
-            draw.text((x, y), watermark_text, font=font, fill=(255, 255, 255, 128))
-            
-            img.save(file_path)
-    else:
-        print(f"Unsupported file type for watermark: {file_extension}")
+    try:
+        if file_extension in ['.jpg', '.jpeg', '.png']:
+            await add_image_watermark(file_path, watermark_text, position)
+        elif file_extension in ['.mp4', '.avi', '.mov']:
+            await add_video_watermark(file_path, watermark_text, position)
+        else:
+            logger.warning(f"Unsupported file type for watermark: {file_extension}")
+    except Exception as e:
+        logger.error(f"Error adding watermark: {str(e)}")
 
-async def get_metadata(file_path):
-    metadata = extractMetadata(createParser(file_path))
-    return metadata
+async def add_image_watermark(file_path, watermark_text, position):
+    with Image.open(file_path) as img:
+        draw = ImageDraw.Draw(img)
+        try:
+            font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 36)
+        except IOError:
+            font = ImageFont.load_default()
+        
+        w, h = img.size
+        text_w, text_h = draw.textsize(watermark_text, font=font)
+        
+        if position == "bottom-right":
+            x, y = w - text_w - 10, h - text_h - 10
+        elif position == "top-left":
+            x, y = 10, 10
+        else:
+            x, y = w // 2 - text_w // 2, h // 2 - text_h // 2
+        
+        draw.text((x, y), watermark_text, font=font, fill=(255, 255, 255, 128))
+        
+        img.save(file_path)
+    logger.info(f"Watermark added to image: {file_path}")
+
+async

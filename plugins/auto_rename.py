@@ -28,8 +28,3 @@ async def set_media_command(client, message):
 
 
 
-
-# Jishu Developer 
-# Don't Remove Credit 🥺
-# Telegram Channel @Madflix_Bots
-# Developer @JishuDeveloper

@@ -33,8 +33,3 @@ async def forces_sub(client, message):
           
 
 
-
-# Jishu Developer 
-# Don't Remove Credit 🥺
-# Telegram Channel @Madflix_Bots
-# Developer @JishuDeveloper

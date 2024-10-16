@@ -10,52 +10,19 @@ async def start(client, message):
     user = message.from_user
     await madflixbotz.add_user(client, message)                
     button = InlineKeyboardMarkup([[
-      InlineKeyboardButton('📢 Updates', url='https://t.me/aboutRizzx'),
-      InlineKeyboardButton('🗿 Shop', url='https://t.me/vpsrdpdomainshop')
+      InlineKeyboardButton('📢 Updates', url='https://t.me/Madflix_Bots'),
+      InlineKeyboardButton('💬 Support', url='https://t.me/MadflixBots_Support')
     ],[
       InlineKeyboardButton('⚙️ Help', callback_data='help'),
-      InlineKeyboardButton('🌟 About', callback_data='about')
+      InlineKeyboardButton('💙 About', callback_data='about')
     ],[
-        InlineKeyboardButton("🧑‍💻 Developer 🧑‍💻", url='https://t.me/ContactM_ebot')
+        InlineKeyboardButton("🧑‍💻 Developer 🧑‍💻", url='https://t.me/CallAdminRobot')
     ]])
     if Config.START_PIC:
         await message.reply_photo(Config.START_PIC, caption=Txt.START_TXT.format(user.mention), reply_markup=button)       
     else:
         await message.reply_text(text=Txt.START_TXT.format(user.mention), reply_markup=button, disable_web_page_preview=True)   
 
-@Client.on_message(filters.private & filters.command("set_watermark"))
-async def set_watermark(client, message):
-    if len(message.command) == 1:
-        return await message.reply_text("Please provide the watermark text.\nExample: `/set_watermark My Watermark`")
-    watermark = message.text.split(" ", 1)[1]
-    await madflixbotz.set_watermark(message.from_user.id, watermark=watermark)
-    await message.reply_text("Watermark has been set successfully!")
-
-@Client.on_message(filters.private & filters.command("del_watermark"))
-async def del_watermark(client, message):
-    await madflixbotz.set_watermark(message.from_user.id, watermark=None)
-    await message.reply_text("Watermark has been removed successfully!")
-
-@Client.on_message(filters.private & filters.command("set_metadata"))
-async def set_metadata(client, message):
-    if len(message.command) == 1:
-        return await message.reply_text("Please provide the metadata in JSON format.\nExample: `/set_metadata {\"title\":\"My Video\", \"artist\":\"John Doe\"}`")
-    try:
-        metadata = eval(message.text.split(" ", 1)[1])
-        if not isinstance(metadata, dict):
-            raise ValueError
-    except:
-        return await message.reply_text("Invalid metadata format. Please provide a valid JSON object.")
-    
-    await madflixbotz.set_metadata(message.from_user.id, metadata=metadata)
-    await message.reply_text("Metadata has been set successfully!")
-
-@Client.on_message(filters.private & filters.command("del_metadata"))
-async def del_metadata(client, message):
-    await madflixbotz.set_metadata(message.from_user.id, metadata=None)
-    await message.reply_text("Metadata has been removed successfully!")
-
-    
 @Client.on_callback_query()
 async def cb_handler(client, query: CallbackQuery):
     data = query.data 
@@ -66,13 +33,13 @@ async def cb_handler(client, query: CallbackQuery):
             text=Txt.START_TXT.format(query.from_user.mention),
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup([[
-                InlineKeyboardButton('📢 Updates', url='https://t.me/aboutRizzx'),
-                InlineKeyboardButton('🗿 Shop', url='https://t.me/vpsrdpdomainshop')
+                InlineKeyboardButton('📢 Updates', url='https://t.me/Madflix_Bots'),
+                InlineKeyboardButton('💬 Support', url='https://t.me/MadflixBots_Support')
                 ],[
                 InlineKeyboardButton('⚙️ Help', callback_data='help'),
-                InlineKeyboardButton('🍁 About', callback_data='about')
+                InlineKeyboardButton('💙 About', callback_data='about')
                 ],[
-                InlineKeyboardButton("🧑‍💻 Developer 🧑‍💻", url='https://t.me/ContactM_ebot')
+                InlineKeyboardButton("🧑‍💻 Developer 🧑‍💻", url='https://t.me/CallAdminRobot')
                 ]])
         )
     elif data == "caption":

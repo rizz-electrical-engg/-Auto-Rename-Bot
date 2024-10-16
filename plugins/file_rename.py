@@ -1,4 +1,3 @@
-from plugins.metadata_watermark import add_metadata, add_watermark, get_metadata
 from pyrogram import Client, filters
 from pyrogram.errors import FloodWait
 from pyrogram.types import InputMediaDocument, Message 
@@ -12,7 +11,7 @@ from config import Config
 import os
 import time
 import re
-import logging 
+
 renaming_operations = {}
 
 # Pattern 1: S01E02 or S01EP02
@@ -221,18 +220,6 @@ async def auto_rename_files(client, message):
         except Exception as e:
             print(f"Error getting duration: {e}")
 
-        try:
-    watermark_text = await madflixbotz.get_watermark(user_id)
-    if watermark_text:
-        await add_watermark(file_path, watermark_text)
-        logging.info(f"Watermark applied to file: {file_path}")
-    else:
-        logging.info(f"No watermark set for user: {user_id}")
-except Exception as e:
-    logging.error(f"Error applying watermark: {str(e)}")
-    # Decide how to handle the error (e.g., continue without watermark, notify user, etc.)
-
-
         upload_msg = await download_msg.edit("Trying To Uploading.....")
         ph_path = None
         c_caption = await madflixbotz.get_caption(message.chat.id)
@@ -298,5 +285,6 @@ except Exception as e:
 
 # Remove the entry from renaming_operations after successful renaming
         del renaming_operations[file_id]
+
 
 

@@ -67,20 +67,7 @@ class Database:
         user = await self.col.find_one({'_id': int(id)})
         return user.get('media_type', None)
 
-    async def set_watermark(self, id, watermark):
-        await self.col.update_one({'_id': int(id)}, {'$set': {'watermark': watermark}})
 
-    async def get_watermark(self, id):
-        user = await self.col.find_one({'_id': int(id)})
-        return user.get('watermark', None)
-
-    async def set_metadata(self, id, metadata):
-        await self.col.update_one({'_id': int(id)}, {'$set': {'metadata': metadata}})
-
-    async def get_metadata(self, id):
-        user = await self.col.find_one({'_id': int(id)})
-        return user.get('metadata', None)
 
 madflixbotz = Database(Config.DB_URL, Config.DB_NAME)
         
-

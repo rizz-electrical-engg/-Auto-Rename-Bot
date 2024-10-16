@@ -5,6 +5,7 @@ from PIL import Image
 from datetime import datetime
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
+from mutagen import File as MutagenFile
 from helper.utils import progress_for_pyrogram, humanbytes, convert
 from helper.database import madflixbotz
 from config import Config
@@ -60,7 +61,7 @@ def extract_quality(filename):
     if match7:
         print("Matched Pattern 7")
         quality7 = "2k"
-        print(f"Quality: {quality7}")
+        print(f" Quality: {quality7}")
         return quality7
 
     match8 = re.search(pattern8, filename)
@@ -187,7 +188,7 @@ async def auto_rename_files(client, message):
             format_template = format_template.replace(placeholder, str(episode_number), 1)
             
         # Add extracted qualities to the format template
-        quality_placeholders = ["quality", "Quality", "QUALITY", "{quality}"]
+        quality_placeholders = ["quality", "Quality ", "QUALITY", "{quality}"]
         for quality_placeholder in quality_placeholders:
             if quality_placeholder in format_template:
                 extracted_qualities = extract_quality(file_name)
@@ -240,6 +241,15 @@ async def auto_rename_files(client, message):
             img.save(ph_path, "JPEG")    
         
 
+        # Extract and set metadata
+        metadata = await extract_and_set_metadata(file_path, new_file_name)
+
+        # Add metadata to caption if needed
+        metadata_text = "\n\n**Metadata:**\n"
+        for key, value in metadata.items():
+            metadata_text += f"{key}: {value}\n"
+        caption += metadata_text
+
         try:
             type = media_type  # Use 'media_type' variable instead
             if type == "document":
@@ -275,7 +285,6 @@ async def auto_rename_files(client, message):
             os.remove(file_path)
             if ph_path:
                 os.remove(ph_path)
-            # Mark the file as ignored
             return await upload_msg.edit(f"Error: {e}")
 
         await download_msg.delete() 
@@ -286,5 +295,38 @@ async def auto_rename_files(client, message):
 # Remove the entry from renaming_operations after successful renaming
         del renaming_operations[file_id]
 
+async def extract_and_set_metadata(file_path, new_file_name):
+    metadata = {}
+    
+    # Extract metadata using hachoir
+    try:
+        parser = createParser(file_path)
+        if parser:
+            with parser:
+                metadata_hachoir = extractMetadata(parser)
+                if metadata_hachoir:
+                    for line in metadata_hachoir.exportPlaintext():
+                        key, value = line.split(': ')
+                        metadata[key.strip()] = value.strip()
+    except Exception as e:
+        print(f"Error extracting metadata with hachoir: {e}")
 
+    # Extract metadata using mutagen
+    try:
+        audio = MutagenFile(file_path)
+        if audio:
+            metadata.update(audio.tags)
+    except Exception as e:
+        print(f"Error extracting metadata with mutagen: {e}")
 
+    # Set metadata for the new file
+    try:
+        audio = MutagenFile(file_path)
+        if audio:
+            for key, value in metadata.items():
+                audio[key] = value
+            audio.save(file_path)
+    except Exception as e:
+        print(f"Error setting metadata: {e}")
+
+    return metadata
